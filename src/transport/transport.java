@@ -1,33 +1,18 @@
 package transport;
+import Utilities.Utilities;
+import Drivers.Driver;
 
-public class transport {
+public abstract class transport <T extends Driver>{
     private String brand;
     private String model;
-    private final int year;
-    private final String country;
-    private String color;
-    private double maxSpeed;
+    private double engineVolume;
+    private T driver;
 
-
-    public transport(String brand, String model, int year, String country, String color, double maxSpeed) {
-        if (brand == null || brand.isEmpty()) {
-            this.brand = "default";
-        } else this.brand = brand;
-        if (model == null || model.isEmpty()) {
-            this.model = "default";
-        } else this.model = model;
-        if (year < 1900) {
-            this.year = 2000;
-        } else this.year = year;
-        if (country == null || country.isEmpty()) {
-            this.country = "default";
-        } else this.country = country;
-        if (color == null || color.isEmpty()) {
-            this.color = "white";
-        } else this.color = color;
-        if (maxSpeed < 0) {
-            this.maxSpeed = 60;
-        } else this.maxSpeed = maxSpeed;
+    public transport(String brand, String model, double engineVolume, T driver) {
+        this.brand = Utilities.check(brand);
+        this.model = Utilities.check(model);
+        this.engineVolume = Utilities.check(engineVolume);
+        this.driver = driver;
     }
 
     public String getBrand() {
@@ -38,55 +23,36 @@ public class transport {
         return model;
     }
 
-    public int getYear() {
-        return year;
+    public double getEngineVolume() {
+        return engineVolume;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public double getMaxSpeed() {
-        return maxSpeed;
+    public T getDriver() {
+        return driver;
     }
 
     public void setBrand(String brand) {
-        if (brand == null || brand.isEmpty()) {
-            this.brand = "default";
-        } else this.brand = brand;
+        this.brand = Utilities.check(brand);
     }
 
     public void setModel(String model) {
-        if (model == null || model.isEmpty()) {
-            this.model = "default";
-        } else this.model = model;
+        this.model = Utilities.check(model);
     }
 
-    public void setColor(String color) {
-        if (color == null || color.isEmpty()) {
-            this.color = "default";
-        } else this.color = color;
+    public void setEngineVolume(double engineVolume) {
+        this.engineVolume = Utilities.check(engineVolume);
     }
 
-    public void setMaxSpeed(double maxSpeed) {
-        if (maxSpeed < 0) {
-            this.maxSpeed = 60;
-        } else this.maxSpeed = maxSpeed;
+    public void start() {
+        System.out.println("Начать движение");
+    }
+
+    public void stop() {
+        System.out.println("Закончить движение");
     }
 
     @Override
     public String toString() {
-        return "transport{" +
-                "brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
-                ", year=" + year +
-                ", country='" + country + '\'' +
-                ", color='" + color + '\'' +
-                ", maxSpeed=" + maxSpeed +
-                '}';
+        return brand + " " + model + " " + engineVolume;
     }
 }
